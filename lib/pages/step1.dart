@@ -134,13 +134,16 @@ class _StepOneState extends State<StepOne> {
                   child: customButton(
                       name: "NEXT",
                       route:() {
-                        context.read<ProgressProvider>().nextStep();
+                        _textFieldController.text.isNotEmpty?
+                        context.read<ProgressProvider>().nextStep():null;
                         Provider.of<ProgressProvider>(context, listen: false).addDocument('id', _textFieldController.text);
                         final allDocuments = context.read<ProgressProvider>().allDocuments;
                         print("show saved data");
                         print(allDocuments?.id);
+                        _textFieldController.text.isNotEmpty?
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => StepTwo()));
+                            MaterialPageRoute(builder: (context) => StepTwo())):null;
+
                       },
                       context: context,
                     txtColor:  (_textFieldController.text.isEmpty? const Color(0x30FFFFFF):const Color(0xffFFFFFF)),

@@ -159,13 +159,15 @@ class _StepThreeState extends State<StepThree> {
                           child: customButton(
                               name: "FINISH",
                             route:() {
-                              context.read<ProgressProvider>().finish();
+                              _textFieldController.text.isNotEmpty?
+                              context.read<ProgressProvider>().finish():null;
                               Provider.of<ProgressProvider>(context, listen: false).addDocument('country', _textFieldController.text);
                               final allDocuments = context.read<ProgressProvider>().allDocuments;
                               print("show saved data");
                               print(allDocuments?.country);
+                              _textFieldController.text.isNotEmpty?
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => const LastPage()));
+                                  MaterialPageRoute(builder: (context) => const LastPage())):null;
                             },
                               context: context,
                             txtColor:  (_textFieldController.text.isEmpty? const Color(0x30FFFFFF):const Color(0xffFFFFFF)),

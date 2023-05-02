@@ -159,13 +159,15 @@ class _StepTwoState extends State<StepTwo> {
                           child: customButton(
                               name: "NEXT",
                             route:() {
-                              context.read<ProgressProvider>().nextStep();
+                              _textFieldController.text.isNotEmpty?
+                              context.read<ProgressProvider>().nextStep():null;
                               Provider.of<ProgressProvider>(context, listen: false).addDocument('number', _textFieldController.text);
                               final allDocuments = context.read<ProgressProvider>().allDocuments;
                               print("show saved data");
                               print(allDocuments?.country);
+                              _textFieldController.text.isNotEmpty?
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => StepThree()));
+                                  MaterialPageRoute(builder: (context) => StepThree())):null;
                             },
                               context: context,
                             txtColor:  (_textFieldController.text.isEmpty? const Color(0x30FFFFFF):const Color(0xffFFFFFF)),
@@ -282,7 +284,10 @@ class _SaveNumberPageState extends State<SaveNumberPage> {
                       name: "SAVE",
                       route:() {
                         final number = _textFieldController.text;
-                        Navigator.pop(context, number);
+
+                        _textFieldController.text.length  < 8?
+                        null:Navigator.pop(context, number);
+
                       },
                       context: context,
                       txtColor:  (_textFieldController.text.length  < 8? const Color(0x30FFFFFF):const Color(0xffFFFFFF)),

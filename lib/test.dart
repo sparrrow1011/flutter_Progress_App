@@ -1,77 +1,91 @@
+import 'package:flutter/cupertino.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:viswal/provider/progess.dart';
 
-class CircularProgressBar extends StatelessWidget {
-  const CircularProgressBar({super.key});
+class Test extends StatefulWidget {
+  const Test({Key? key}) : super(key: key);
+
+  @override
+  State<Test> createState() => _TestState();
+}
+
+class _TestState extends State<Test> {
   @override
   Widget build(BuildContext context) {
-    final progressExpose = Provider.of<ProgressProvider>(context, listen: false);
-    final progress = context.watch<ProgressProvider>().progress;
-    
-    return SizedBox(
-      width: 200.0,
-      height: 200.0,
-      child: Stack(
-        children:[
-          Center(
-            child: CustomPaint(
-              painter: ProgressPainter(progress: progress),
-              child: SizedBox(
-                width: 150.0,
-                height: 150.0,
-                child: Stack(
-                    children:[
-                      Center(
-                        child: CustomPaint(
-                          painter: BlueCustomPaint(progress: .80),
-                          child: const SizedBox(
-                            width: 120.0,
-                            height: 120.0,
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Consumer<ProgressProvider>(builder: (context, data, child){
-                          print(data.progress);
-                          return Text('${data.progress*100.round()}%',
-                            style: GoogleFonts.roboto(
-                              color: Colors.white,
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          );
-                        }),
-                        ),
-                    ]
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            // top: 60,
-            // left: 20,
-            top: (progress < 0 ? 60.0 : progress == 0.33 ? 180.0 : progress == 0.66 ? 60: 60) ,
-            left:(progress < 0 ? 170.0 : progress == 0.33 ? 95.0 : progress == 0.66 ? 20: 170),
-            child: Container(
-              constraints: const BoxConstraints(
-                  minHeight: 10,
-                  minWidth: 10
-              ),
-              decoration: BoxDecoration(
-                color: (progress == 1 ? const Color(0x00F864C5): const Color(0xffF864C5)) ,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-        ]
+    return const Scaffold(
+      backgroundColor: Color(0xff333333),
+      body: SafeArea(
+        child: Center(
+          child: CircularProgressBar(),
+        ),
       ),
     );
   }
 }
 
+class CircularProgressBar extends StatelessWidget {
+  const CircularProgressBar({super.key});
+  @override
+  Widget build(BuildContext context) {
+    final progress = 0.66;
+    return SizedBox(
+      width: 200.0,
+      height: 200.0,
+      child: Stack(
+          children:[
+            Center(
+              child: CustomPaint(
+                painter: ProgressPainter(progress: progress),
+                child: SizedBox(
+                  width: 150.0,
+                  height: 150.0,
+                  child: Stack(
+                      children:[
+                        Center(
+                          child: CustomPaint(
+                            painter: BlueCustomPaint(progress: .80),
+                            child: const SizedBox(
+                              width: 115.0,
+                              height: 115.0,
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Text('${progress*100.round()}%',
+                            style: GoogleFonts.roboto(
+                              color: Colors.white,
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          )
+                        ),
+                      ]
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              // top: 60,
+              // left: 20,
+              top: (progress < 0 ? 60.0 : progress == 0.33 ? 180.0 : progress == 0.66 ? 60: 60) ,
+              left:(progress < 0 ? 170.0 : progress == 0.33 ? 95.0 : progress == 0.66 ? 20: 170),
+              child: Container(
+                constraints: const BoxConstraints(
+                    minHeight: 10,
+                    minWidth: 10
+                ),
+                decoration: BoxDecoration(
+                  color: (progress == 1 ? const Color(0x00F864C5): const Color(0xffF864C5)) ,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
+          ]
+      ),
+    );
+  }
+}
 
 class ProgressPainter extends CustomPainter {
   double progress;
@@ -174,12 +188,12 @@ class ProgressPainter extends CustomPainter {
 
 
     Paint paint3 = Paint()
-      ..color = const Color(0xffF864C5)
+      ..color = const Color(0xffffffff)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4.0
       ..strokeCap = StrokeCap.square
       ..shader = const LinearGradient(
-        colors: [Color(0xffF864C5), Color(0xffF864C5)],
+        colors: [Color(0xffffffff), Color(0xffffffff)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ).createShader(Rect.fromCircle(center: center, radius: radius));
